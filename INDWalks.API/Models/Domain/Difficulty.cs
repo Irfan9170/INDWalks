@@ -1,4 +1,4 @@
-﻿namespace INDWalks.API.Models.Data
+﻿namespace INDWalks.API.Models.Domain
 {
     public class Difficulty
     {
