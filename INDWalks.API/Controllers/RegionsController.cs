@@ -1,6 +1,7 @@
 ﻿using INDWalks.API.Data;
 using INDWalks.API.Models.Domain;
 using INDWalks.API.Models.DTOs;
+using INDWalks.API.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,9 +13,12 @@ namespace INDWalks.API.Controllers
     public class RegionsController : ControllerBase
     {
         private readonly INDWalksDbContext dbContext;
-        public RegionsController(INDWalksDbContext dbContext)
+        private readonly IRegionRepository regionRepository;
+
+        public RegionsController(INDWalksDbContext dbContext, IRegionRepository regionRepository)
         {
             this.dbContext = dbContext;
+            this.regionRepository = regionRepository;
         }
 
         public INDWalksDbContext DbContext { get; }
@@ -24,7 +28,7 @@ namespace INDWalks.API.Controllers
         {
             
             //Get regions from database through entity framework using dbcontext class
-            var regionDomains = await dbContext.Regions.ToListAsync();
+            var regionDomains = await regionRepository.GetAllRegionAsync();
 
             //Map DTO class
             var regionsDTO = new List<RegionDTO>();
