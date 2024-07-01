@@ -45,12 +45,13 @@ namespace INDWalks.API.Controllers
             }
             return Ok(regionsDTO);
         }
+
         [HttpGet]
         [Route("{id:Guid}")]
         public async Task<IActionResult> GetRegionById ([FromRoute] Guid id)
         {
             //Get regions from database through entity framework using dbcontext class
-            var regionDomain = await dbContext.Regions.FindAsync(id);
+            var regionDomain = await regionRepository.GetRegionsByIdAync(id);
 
            // var region = dbContext.Regions.FirstOrDefault(x => x.Id ==id);
 
@@ -71,7 +72,6 @@ namespace INDWalks.API.Controllers
         }
 
         [HttpPost]
-
         public async Task<IActionResult> CreateRegion([FromBody] AddRegionDTO addRegionDTO)
         {
             //Map or Convert DTO to Domain
