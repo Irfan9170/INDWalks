@@ -6,5 +6,11 @@ namespace INDWalks.API.Repositories
     {
         Task<List<Region>> GetAllRegionAsync();
         Task<Region?> GetRegionsByIdAync(Guid id);
+
+        Task <Region> CreateRegionAsync(Region region);
+
+        Task<Region?> UpdateRegionAsync(Guid id,Region region);
+
+        Task<Region?> DeleteRegionAsync(Guid id);
     }
 }
