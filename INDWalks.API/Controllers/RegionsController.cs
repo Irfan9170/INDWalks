@@ -47,7 +47,7 @@ namespace INDWalks.API.Controllers
             //        RegionImageUrl= regionDomain.RegionImageUrl
             //    });
             //}
-            ;
+            //;
             return Ok(autoMapping.Map<List<RegionDTO>>(regionDomains));
         }
 
@@ -62,13 +62,14 @@ namespace INDWalks.API.Controllers
 
             //DTOs Mapping 
 
-            var regionDTO = new RegionDTO
-            {
-                Id=regionDomain.Id,
-                Name = regionDomain.Name,
-                Code = regionDomain.Code,
-                RegionImageUrl= regionDomain.RegionImageUrl
-            };
+            //var regionDTO = new RegionDTO
+            //{
+            //    Id=regionDomain.Id,
+            //    Name = regionDomain.Name,
+            //    Code = regionDomain.Code,
+            //    RegionImageUrl= regionDomain.RegionImageUrl
+            //};
+            var regionDTO = autoMapping.Map<RegionDTO>(regionDomain);
             if (regionDTO == null)
             {
                 return NotFound();
@@ -80,25 +81,27 @@ namespace INDWalks.API.Controllers
         public async Task<IActionResult> CreateRegion([FromBody] AddRegionDTO addRegionDTO)
         {
             //Map or Convert DTO to Domain
-            var regionDomain = new Region
-            {
-                Name = addRegionDTO.Name,
-                Code = addRegionDTO.Code,
-                RegionImageUrl = addRegionDTO.RegionImageUrl
-            };
+            //var regionDomain = new Region
+            //{
+            //    Name = addRegionDTO.Name,
+            //    Code = addRegionDTO.Code,
+            //    RegionImageUrl = addRegionDTO.RegionImageUrl
+            //};
 
+            var regionDomain = autoMapping.Map<Region>(addRegionDTO);
             regionDomain = await regionRepository.CreateRegionAsync(regionDomain);
 
             //Map domain to DTO again 
 
-            var regionDTO = new RegionDTO
-            {
-                Id = regionDomain.Id,
-                Name = regionDomain.Name,
-                Code = regionDomain.Code,
-                RegionImageUrl = regionDomain.RegionImageUrl
-            };
+            //var regionDTO = new RegionDTO
+            //{
+            //    Id = regionDomain.Id,
+            //    Name = regionDomain.Name,
+            //    Code = regionDomain.Code,
+            //    RegionImageUrl = regionDomain.RegionImageUrl
+            //};
 
+            var regionDTO = autoMapping.Map<RegionDTO>(regionDomain);
             return CreatedAtAction(nameof(GetRegionById), new { id = regionDTO.Id }, regionDTO);
 
         }
@@ -109,14 +112,14 @@ namespace INDWalks.API.Controllers
         {
 
 
-            var regionDomain = new Region
-            {
-                Code = UpdateRegionDTO.Code,
-                RegionImageUrl = UpdateRegionDTO.RegionImageUrl,
-                Name = UpdateRegionDTO.Name,
+            //var regionDomain = new Region
+            //{
+            //    Code = UpdateRegionDTO.Code,
+            //    RegionImageUrl = UpdateRegionDTO.RegionImageUrl,
+            //    Name = UpdateRegionDTO.Name,
 
-            };
-
+            //};
+            var regionDomain = autoMapping.Map<Region>(UpdateRegionDTO);
             regionDomain= await regionRepository.UpdateRegionAsync(id, regionDomain);
 
             if (regionDomain== null)
@@ -129,14 +132,14 @@ namespace INDWalks.API.Controllers
             regionDomain.RegionImageUrl = UpdateRegionDTO.RegionImageUrl;
 
             await dbContext.SaveChangesAsync();
-            var regionDTO = new RegionDTO
-            {
-                Id=regionDomain.Id,
-                Name = regionDomain.Name,
-                Code = regionDomain.Code,
-                RegionImageUrl = regionDomain.RegionImageUrl
-            };
-
+            //var regionDTO = new RegionDTO
+            //{
+            //    Id=regionDomain.Id,
+            //    Name = regionDomain.Name,
+            //    Code = regionDomain.Code,
+            //    RegionImageUrl = regionDomain.RegionImageUrl
+            //};
+            var regionDTO = autoMapping.Map<RegionDTO>(regionDomain);
             return Ok(regionDTO);
             
         }
@@ -150,14 +153,15 @@ namespace INDWalks.API.Controllers
             {
                 return NotFound();
             }
-         
-            var regionDTO = new RegionDTO
-            {
-                Id = regionDomain.Id,
-                Name = regionDomain.Name,
-                Code = regionDomain.Code,
-                RegionImageUrl = regionDomain.RegionImageUrl
-            };
+
+            //var regionDTO = new RegionDTO
+            //{
+            //    Id = regionDomain.Id,
+            //    Name = regionDomain.Name,
+            //    Code = regionDomain.Code,
+            //    RegionImageUrl = regionDomain.RegionImageUrl
+            //};
+            var regionDTO = autoMapping.Map<RegionDTO>(regionDomain);
             return Ok(regionDTO);
         }
     }

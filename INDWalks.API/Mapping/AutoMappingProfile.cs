@@ -9,6 +9,8 @@ namespace INDWalks.API.Mapping
         public AutoMappingProfile()
         {
             CreateMap<Region,RegionDTO>().ReverseMap();
+            CreateMap<Region, UpdateRegionDTO>().ReverseMap();
+            CreateMap<Region,AddRegionDTO>().ReverseMap();
         }
     }
 }
