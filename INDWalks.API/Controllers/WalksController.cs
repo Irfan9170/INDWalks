@@ -11,21 +11,32 @@ namespace INDWalks.API.Controllers
     [ApiController]
     public class WalksController : ControllerBase
     {
-        private readonly IRegionRepository regionRepository;
+        private readonly IWalkRepository walkRepository;
         private readonly IMapper mapper;
 
-        public WalksController(IRegionRepository regionRepository,IMapper mapper)
+        public WalksController(IWalkRepository walkRepository,IMapper mapper)
         {
-            this.regionRepository = regionRepository;
+            this.walkRepository = walkRepository;
             this.mapper = mapper;
         }
 
+        [HttpGet]
+
+        public async Task<IActionResult> GetAllWalksAsync()
+        {
+            var walksDomain = await walkRepository.GetAllWalksAsync();
+            return Ok(mapper.Map<List<WalkDTO>>(walksDomain));
+        }
+        
         [HttpPost]
 
         public async Task<IActionResult>  Create([FromBody] AddWalkDTO addWalkDTO)
         {
             var walkDomain = mapper.Map<Walk>(addWalkDTO);
+            walkDomain = await walkRepository.CreateAsync(walkDomain);
+            return Ok(mapper.Map<WalkDTO>(walkDomain));
 
         }
+
     }
 }
