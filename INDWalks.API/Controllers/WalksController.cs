@@ -14,10 +14,24 @@ namespace INDWalks.API.Controllers
         private readonly IWalkRepository walkRepository;
         private readonly IMapper mapper;
 
-        public WalksController(IWalkRepository walkRepository,IMapper mapper)
+        public WalksController(IWalkRepository walkRepository, IMapper mapper)
         {
             this.walkRepository = walkRepository;
             this.mapper = mapper;
+        }
+
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetWalkByID([FromRoute] Guid id)
+        {
+            var walkDomain = await walkRepository.GetWalkByIdAsync(id);
+
+            var walkDTO = mapper.Map<WalkDTO>(walkDomain);
+            if (walkDTO == null)
+            {
+                return NotFound();
+            }
+            return Ok(walkDTO);
         }
 
         [HttpGet]
@@ -34,6 +48,27 @@ namespace INDWalks.API.Controllers
         {
             var walkDomain = mapper.Map<Walk>(addWalkDTO);
             walkDomain = await walkRepository.CreateAsync(walkDomain);
+            return Ok(mapper.Map<WalkDTO>(walkDomain));
+
+        }
+
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> UpdateWalk([FromBody] UpdateWalkDTO updateWalkDTO, Guid id)
+        {
+            var walkDomain = mapper.Map<Walk>(updateWalkDTO);
+            walkDomain = await walkRepository.UpdateWalkAsync(id, walkDomain);
+            if(walkDomain == null) { return NotFound(); }
+            return Ok(mapper.Map<WalkDTO>(walkDomain));
+
+        }
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> DeleateWalk (Guid id)
+        {
+            var walkDomain = await walkRepository.DeleteWalkAsync(id);
+            if(walkDomain == null) { return NotFound();};
+
             return Ok(mapper.Map<WalkDTO>(walkDomain));
 
         }

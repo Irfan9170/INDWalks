@@ -13,7 +13,8 @@ namespace INDWalks.API.Mapping
             CreateMap<Region,AddRegionDTO>().ReverseMap();
             CreateMap<AddWalkDTO,Walk>().ReverseMap();
             CreateMap<WalkDTO,Walk>().ReverseMap();
-            //CreateMap<Walk,WalkDTO>().ReverseMap();
+            CreateMap<Difficulty,DifficultyDTO>().ReverseMap();
+            CreateMap<UpdateWalkDTO, Walk>().ReverseMap();
         }
     }
 }

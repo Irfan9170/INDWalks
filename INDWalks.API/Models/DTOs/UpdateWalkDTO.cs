@@ -1,11 +1,7 @@
-﻿using INDWalks.API.Models.Domain;
-
-namespace INDWalks.API.Models.DTOs
+﻿namespace INDWalks.API.Models.DTOs
 {
-    public class WalkDTO
+    public class UpdateWalkDTO
     {
-        public Guid Id { get; set; }
-
         public string Name { get; set; }
 
         public string Description { get; set; }
@@ -15,9 +11,5 @@ namespace INDWalks.API.Models.DTOs
         public string? WalkImageUrl { get; set; }
         public Guid DifficultyId { get; set; }
         public Guid RegionID { get; set; }
-
-        public DifficultyDTO Difficulty { get; set; }
-
-        public RegionDTO Region { get; set; }
     }
 }
