@@ -87,23 +87,31 @@ namespace INDWalks.API.Controllers
             //    Code = addRegionDTO.Code,
             //    RegionImageUrl = addRegionDTO.RegionImageUrl
             //};
+            if (ModelState.IsValid)
+            {
 
-            var regionDomain = autoMapping.Map<Region>(addRegionDTO);
-            regionDomain = await regionRepository.CreateRegionAsync(regionDomain);
 
-            //Map domain to DTO again 
+                var regionDomain = autoMapping.Map<Region>(addRegionDTO);
+                regionDomain = await regionRepository.CreateRegionAsync(regionDomain);
 
-            //var regionDTO = new RegionDTO
-            //{
-            //    Id = regionDomain.Id,
-            //    Name = regionDomain.Name,
-            //    Code = regionDomain.Code,
-            //    RegionImageUrl = regionDomain.RegionImageUrl
-            //};
+                //Map domain to DTO again 
 
-            var regionDTO = autoMapping.Map<RegionDTO>(regionDomain);
-            return CreatedAtAction(nameof(GetRegionById), new { id = regionDTO.Id }, regionDTO);
+                //var regionDTO = new RegionDTO
+                //{
+                //    Id = regionDomain.Id,
+                //    Name = regionDomain.Name,
+                //    Code = regionDomain.Code,
+                //    RegionImageUrl = regionDomain.RegionImageUrl
+                //};
 
+                var regionDTO = autoMapping.Map<RegionDTO>(regionDomain);
+                return CreatedAtAction(nameof(GetRegionById), new { id = regionDTO.Id }, regionDTO);
+            }
+
+            else
+            {
+                return BadRequest(ModelState);
+            }
         }
 
         [HttpPut]

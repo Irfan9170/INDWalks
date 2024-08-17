@@ -36,9 +36,10 @@ namespace INDWalks.API.Controllers
 
         [HttpGet]
 
-        public async Task<IActionResult> GetAllWalksAsync()
+        public async Task<IActionResult> GetAllWalksAsync([FromQuery] string? filterOn, [FromQuery] string? filterQuery,
+            [FromQuery] string? sortBy, [FromQuery] bool isAscending, [FromQuery] int page = 1, [FromQuery] int pageSize=1000)
         {
-            var walksDomain = await walkRepository.GetAllWalksAsync();
+            var walksDomain = await walkRepository.GetAllWalksAsync(filterOn,filterQuery,sortBy,isAscending,page,pageSize);
             return Ok(mapper.Map<List<WalkDTO>>(walksDomain));
         }
         
